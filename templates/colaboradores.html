@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Cadastro de Colaboradores</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/colaboradores.css') }}">
+</head>
+<body>
+
+  <!-- Menu de navegação -->
+  <nav class="navbar">
+      <div class="nav-container">
+          <span class="logo">Saurus Dashboard</span>
+          <ul class="nav-links">
+                <li><a href="/">Início</a></li>
+                <li><a href="/analise" class="ativo">Análise</a></li>
+                <li><a href="{{ url_for('cadastrar_colaborador') }}">Cadastro de colaborador</a></li>
+                <li><a href="#">Ranking dos separadores</a></li>
+                <li><a href="#">Sair</a></li>
+          </ul>
+      </div>
+  </nav>
+
+  <h1>Cadastro de Colaboradores</h1>
+
+  <form method="POST" enctype="multipart/form-data">
+    <input type="text" name="nome" placeholder="Nome" required>
+    <input type="text" name="cargo" placeholder="Cargo" required>
+    <select name="categoria" required>
+      <option value="">Selecione a categoria</option>
+      <option value="separador">Separador</option>
+      <option value="conferente">Conferente</option>
+      <option value="gerente">Gerente</option>
+      <option value="encarregado">Encarregado</option>
+      <option value="vendedor">Vendedor(a)</option>
+    </select>
+    <input type="file" name="imagem" accept="image/*" required>
+    <button type="submit">Cadastrar</button>
+  </form>
+
+  <div class="categoria">
+    <h2>Separador</h2>
+    {% for c in Separador %}
+      <div class="colaborador">
+        <img src="{{ url_for('static', filename='uploads/' + c[4]) }}" alt="Foto">
+        <div><strong>{{ c[1] }}</strong><br>{{ c[2] }}</div>
+      </div>
+    {% else %}
+      <p>Nenhum separador cadastrado.</p>
+    {% endfor %}
+  </div>
+
+  <div class="categoria">
+    <h2>Conferentes</h2>
+    {% for c in conferentes %}
+      <div class="colaborador">
+        <img src="{{ url_for('static', filename='uploads/' + c[4]) }}" alt="Foto">
+        <div><strong>{{ c[1] }}</strong><br>{{ c[2] }}</div>
+      </div>
+    {% else %}
+      <p>Nenhum conferente cadastrado.</p>
+    {% endfor %}
+  </div>
+
+  <div class="categoria">
+    <h2>Gerentes</h2>
+    {% for c in gerentes %}
+      <div class="colaborador">
+        <img src="{{ url_for('static', filename='uploads/' + c[4]) }}" alt="Foto">
+        <div><strong>{{ c[1] }}</strong><br>{{ c[2] }}</div>
+      </div>
+    {% else %}
+      <p>Nenhum gerente cadastrado.</p>
+    {% endfor %}
+  </div>
+
+  <div class="categoria">
+    <h2>Encarregados</h2>
+    {% for c in encarregados %}
+      <div class="colaborador">
+        <img src="{{ url_for('static', filename='uploads/' + c[4]) }}" alt="Foto">
+        <div><strong>{{ c[1] }}</strong><br>{{ c[2] }}</div>
+      </div>
+    {% else %}
+      <p>Nenhum encarregado cadastrado.</p>
+    {% endfor %}
+  </div>
+
+  <div class="categoria">
+    <h2>Vendedor(a)</h2>
+    {% for c in vendedor %}
+      <div class="colaborador">
+        <img src="{{ url_for('static', filename='uploads/' + c[4]) }}" alt="Foto">
+        <div><strong>{{ c[1] }}</strong><br>{{ c[2] }}</div>
+      </div>
+    {% else %}
+      <p>Nenhum vendedor cadastrado.</p>
+    {% endfor %}
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Análise</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <span class="logo">Saurus Dashboard</span>
+            <ul class="nav-links">
+                <li><a href="/">Início</a></li>
+                <li><a href="/analise" class="ativo">Análise</a></li>
+                <li><a href="{{ url_for('cadastrar_colaborador') }}">Cadastro de colaborador</a></li>
+                <li><a href="#">Ranking dos separadores</a></li>
+                <li><a href="#">Sair</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <h2>Página de Análise</h2>
+
+    <!-- Botões dos dias da semana -->
+    <!-- Botão Semana -->
+    <div class="botoes-dias">
+        <a href="{{ url_for('analise', dia='semana') }}">
+            <button class="botao-dia {% if dia_selecionado == 'semana' %}ativo{% endif %}">
+                Semana
+            </button>
+        </a>
+
+        <!-- Botões dos dias da semana -->
+        {% for dia in dias %}
+            <a href="{{ url_for('analise', dia=dia.data_iso) }}">
+                <button class="botao-dia {% if dia_selecionado and (dia.data in dia_selecionado) %}ativo{% endif %}">
+                    {{ dia.nome }}<br><small>{{ dia.data }}</small>
+                </button>
+            </a>
+        {% endfor %}
+    </div>
+
+    {% if dia_selecionado %}
+        <p><strong>Dia selecionado:</strong> {{ dia_selecionado }}</p>
+
+        {% if dados %}
+            <table border="1">
+                <thead>
+                    <tr>
+                        {% for col in nomes_colunas %}
+                            <th>{{ col }}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for linha in dados %}
+                        <tr>
+                            {% for col in nomes_colunas %}
+                                <td>{{ linha[col] }}</td>
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>Nenhum registro encontrado para este dia.</p>
+        {% endif %}
+    {% endif %}
+
+    {% if dados %}
+        <table border="1">
+            <thead>
+                <tr>
+                    {% for col in nomes_colunas1 %}
+                        <th>{{ col }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for linha in dados1 %}
+                    <tr>
+                        {% for col in nomes_colunas1 %}
+                            <td>{{ linha[col] }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Nenhum registro encontrado.</p>
+    {% endif %}
+
+    <p>Conteúdo da análise aqui...</p>
+</body>
+</html>
